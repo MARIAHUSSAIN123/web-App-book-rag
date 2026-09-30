@@ -61,3 +61,7 @@
   .cards{grid-template-columns:1fr}
   .card:hover{transform:none}
 }
+
+/* ---- Scroller fix: code lines wrap, no inner scrollbar ---- */
+.code{overflow:hidden;white-space:pre-wrap;word-break:break-word}
+.win{max-width:100%}
