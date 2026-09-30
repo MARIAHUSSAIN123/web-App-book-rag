@@ -1,3 +1,7 @@
+/* =========================================================
+   GLOBAL THEME
+========================================================= */
+
 :root {
   --ifm-color-primary: #7c3aed;
   --ifm-color-primary-dark: #6d28d9;
@@ -9,12 +13,14 @@
   --ifm-color-primary-lightest: #c4b5fd;
 
   --ifm-code-font-size: 95%;
-  --ifm-navbar-shadow: 0 2px 14px rgba(124, 58, 237, 0.12);
+
+  --ifm-navbar-shadow:
+    0 2px 14px rgba(124, 58, 237, 0.12);
 }
 
-/* ================================
+/* =========================================================
    DARK MODE
-================================ */
+========================================================= */
 
 [data-theme="dark"] {
   --ifm-color-primary: #a78bfa;
@@ -27,38 +33,143 @@
   --ifm-color-primary-lightest: #c1c4fd;
 }
 
-/* ================================
+/* =========================================================
+   GLOBAL WIDTH / OVERFLOW
+========================================================= */
+
+html {
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow-x: hidden !important;
+}
+
+#__docusaurus {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+.main-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+/* =========================================================
    NAVBAR
-================================ */
+========================================================= */
 
 .navbar {
-  backdrop-filter: blur(10px);
+  width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
+
+  backdrop-filter: blur(10px);
 }
 
 .navbar__title {
   font-weight: 800;
-  background: linear-gradient(90deg, #7c3aed, #f97316);
+
+  background:
+    linear-gradient(
+      90deg,
+      #7c3aed,
+      #f97316
+    );
+
   -webkit-background-clip: text;
   background-clip: text;
+
   color: transparent;
 }
 
-/* ================================
+/* =========================================================
    MARKDOWN
-================================ */
+========================================================= */
+
+.markdown {
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  animation: pagein 0.5s ease both;
+}
 
 .markdown h1,
 .markdown h2 {
   letter-spacing: -0.01em;
 }
 
-.markdown {
-  animation: pagein 0.5s ease both;
+/* =========================================================
+   MARKDOWN IMAGES
+========================================================= */
+
+.markdown img {
+  display: block;
+
   max-width: 100%;
-  min-width: 0;
-  overflow-wrap: anywhere;
+  height: auto;
 }
+
+/* =========================================================
+   MARKDOWN TABLES
+========================================================= */
+
+.markdown table {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: auto;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MARKDOWN CODE
+========================================================= */
+
+.markdown pre {
+  max-width: 100%;
+  box-sizing: border-box;
+
+  overflow-x: auto;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: hidden;
+
+  background:
+    linear-gradient(
+      120deg,
+      #1a0b2e,
+      #2e1065
+    );
+}
+
+.footer__copyright {
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   ANIMATION
+========================================================= */
 
 @keyframes pagein {
   from {
@@ -72,85 +183,60 @@
   }
 }
 
-/* ================================
-   MARKDOWN TABLE
-================================ */
+/* =========================================================
+   MOBILE DOCUSARUS FIX
+========================================================= */
 
-.markdown table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
+@media (max-width: 996px) {
+
+  html,
+  body,
+  #__docusaurus {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    overflow-x: hidden !important;
+  }
+
+  /*
+   * Docusaurus uses negative margins on .row.
+   * These can create horizontal overflow on phones.
+   */
+
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    box-sizing: border-box !important;
+  }
+
+  .row {
+    max-width: 100% !important;
+
+    box-sizing: border-box !important;
+  }
+
+  /* Don't force columns wider than viewport */
+
+  [class*="col"] {
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    box-sizing: border-box !important;
+  }
 }
 
-/* ================================
-   IMAGES
-================================ */
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
 
-.markdown img {
-  max-width: 100%;
-  height: auto;
-}
+@media (max-width: 600px) {
 
-/* ================================
-   CODE BLOCKS
-================================ */
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
 
-.markdown pre {
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-x: auto;
-}
-
-/* ================================
-   FOOTER
-================================ */
-
-.footer {
-  background: linear-gradient(120deg, #1a0b2e, #2e1065);
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.footer__copyright {
-  font-size: 0.95rem;
-}
-
-/* ================================
-   GLOBAL MOBILE OVERFLOW FIX
-================================ */
-
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden !important;
-}
-
-#__docusaurus {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.main-wrapper {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* Docusaurus containers */
-
-.container,
-.row,
-[class*="col"] {
-  max-width: 100%;
-}
-
-/* ================================
-   MOBILE
-================================ */
-
-@media (max-width: 480px) {
   .navbar__title {
     font-size: 0.9rem;
   }
