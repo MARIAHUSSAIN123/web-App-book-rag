@@ -9,3 +9,12 @@
 @keyframes pagein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .footer{background:linear-gradient(120deg,#1a0b2e,#2e1065)}
 .footer__copyright{font-size:.95rem}
+
+/* ---- Mobile fixes ---- */
+body{overflow-x:hidden}
+.markdown table{display:block;overflow-x:auto}
+@media (max-width:480px){
+  .navbar__title{font-size:.9rem}
+  .navbar__inner{flex-wrap:nowrap}
+  .footer__copyright{font-size:.85rem}
+}

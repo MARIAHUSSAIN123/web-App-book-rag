@@ -41,3 +41,23 @@
 @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 @media(max-width:900px){.heroIn{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- Mobile fixes ---- */
+@media (max-width:900px){
+  .heroIn>*{min-width:0}
+  .hero{padding:3rem 0 2.5rem}
+  .left{text-align:center}
+  .sub{margin-inline:auto}
+  .btns,.stats{justify-content:center}
+}
+@media (max-width:600px){
+  .hero::before,.hero::after{width:300px;height:300px}
+  .title{font-size:2rem}
+  .btns{flex-direction:column}.btns>*{width:100%}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr)}
+  .stat{min-width:0}
+  .code{font-size:.72rem;min-height:210px;padding:.8rem}
+  .h2{font-size:1.6rem}
+  .cards{grid-template-columns:1fr}
+  .card:hover{transform:none}
+}
