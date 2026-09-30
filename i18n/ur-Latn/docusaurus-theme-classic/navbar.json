@@ -1,0 +1,4 @@
+{
+  "title": {"message": "Modern Web Development Book", "description": "The title in the navbar"},
+  "item.label.Book": {"message": "Kitab", "description": "Navbar item with label Book"}
+}
