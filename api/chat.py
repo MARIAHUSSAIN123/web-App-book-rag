@@ -6,7 +6,7 @@ QURL, QKEY = os.environ["QDRANT_URL"].rstrip("/"), os.environ["QDRANT_API_KEY"]
 BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 # Pehla model busy ho to agla try hota hai. Vercel env GEMINI_MODEL mein comma se naam de sakte hain.
 COLL = os.environ.get("QDRANT_COLLECTION", "webbook")  # AI-DS book ke collection se alag
-MODELS = [m.strip() for m in os.environ.get("GEMINI_MODEL", "gemini-3.5-flash,gemini-3.1-flash-lite,gemini-2.5-flash").split(",") if m.strip()]
+MODELS = [m.strip() for m in os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite,gemini-3.5-flash,gemini-2.5-flash").split(",") if m.strip()]
 
 SYSTEM = """You are a friendly, expert web development mentor for students of a 12-month "Modern Web Application Development" course (HTML, CSS, Bootstrap, JavaScript, TypeScript, React, Redux, Next.js, Node.js, Express, MongoDB, PostgreSQL, GraphQL, Docker, CI/CD).
 You receive BOOK CONTEXT (course outline excerpts) and the recent chat.
@@ -22,29 +22,31 @@ Rules:
 
 
 def generate(payload):
-    """Busy/limit errors par retry aur backup models. (data, error) return karta hai."""
+    """Busy ya slow model par foran agla model try karta hai. (data, error) return karta hai."""
     start, last = time.time(), "unknown error"
     for model in MODELS:
         for attempt in range(2):
-            if time.time() - start > 42:
+            left = 52 - (time.time() - start)
+            if left < 5:
                 return None, last
             try:
-                data = httpx.post(f"{BASE}/{model}:generateContent?key={G}", json=payload, timeout=25).json()
+                data = httpx.post(f"{BASE}/{model}:generateContent?key={G}", json=payload,
+                                  timeout=min(20, left)).json()
             except Exception as e:
-                last = str(e)
-                time.sleep(1)
-                continue
+                last = str(e) or "timeout"
+                break                 # timeout/network: dobara wahi model nahi, seedha agla model
             if "candidates" in data:
                 return data, None
             err = data.get("error", {})
             last = err.get("message") or str(data.get("promptFeedback") or data)
             code = err.get("code")
             if code in (429, 500, 503, 504):
-                time.sleep(1.2)
-                continue          # dobara try, phir agla model
+                if attempt == 0:
+                    time.sleep(1)
+                continue              # ek dafa retry, phir agla model
             if code == 404:
-                break             # ye model nahi mila, agla try karo
-            return None, last     # key ghalat / content blocked, retry ka faida nahi
+                break                 # ye model nahi mila, agla try karo
+            return None, last         # key ghalat / content blocked, retry ka faida nahi
     return None, last
 
 
